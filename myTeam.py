@@ -220,10 +220,12 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
 
         if action == Directions.STOP: features['stop'] = 1
         my_pos = successor.get_agent_state(self.index).get_position()  
-
+        if(self.get_team(game_state)[0]==0):
+            centers = [(15.0,7.0),(15.0,8.0),(15.0,11.0),(15.0,12.0),(15.0,13.0),(15.0,14.0),(15.0,5.0),(15.0,4.0),(15.0,2.0),(15.0,1.0)]
+        else:
+            centers = [(16.0,7.0),(16.0,8.0),(16.0,11.0),(16.0,13.0),(16.0,14.0),(16.0,4.0),(16.0,2.0),(16.0,1.0),(16.0,10.0)]
         if dotsCarried > 1:
             my_pos = successor.get_agent_state(self.index).get_position()
-            centers = [(15.0,7.0),(15.0,8.0),(15.0,11.0),(15.0,12.0),(15.0,13.0),(15.0,14.0),(15.0,5.0),(15.0,4.0),(15.0,2.0),(15.0,1.0)]
             min_distance = float('inf')  # Initialize the minimum distance with infinity
             for center in centers:
                 distance = self.get_maze_distance(my_pos, center)  # Calculate the distance to the center
