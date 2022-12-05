@@ -210,7 +210,6 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
         if len(ghosts) > 0:
             positions = [ghost.get_position() for ghost in ghosts]
             my_pos = successor.get_agent_state(self.index).get_position()
-            print("ghost:",my_pos,positions[0])
             min_distance = min([self.get_maze_distance(my_pos, ghost_pos) for ghost_pos in positions])
             if scaredTime == 0:
                 # Penalize if the ghost is not scared
@@ -224,9 +223,13 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
 
         if dotsCarried > 1:
             my_pos = successor.get_agent_state(self.index).get_position()
-            center = (15.0,7.0)
-            distance_to_center = self.get_maze_distance(my_pos, center)  # Calculate the distance to the center
-            features['x_position'] = distance_to_center  # Add the distance to the features
+            centers = [(15.0,7.0),(15.0,8.0),(15.0,11.0),(15.0,12.0),(15.0,13.0),(15.0,14.0),(15.0,5.0),(15.0,4.0),(15.0,2.0),(15.0,1.0)]
+            min_distance = float('inf')  # Initialize the minimum distance with infinity
+            for center in centers:
+                distance = self.get_maze_distance(my_pos, center)  # Calculate the distance to the center
+                if distance < min_distance:  # Update the minimum distance if necessary
+                    min_distance = distance
+            features['x_position'] = min_distance  # Add the minimum distance to the featuress
 
         return features
 
